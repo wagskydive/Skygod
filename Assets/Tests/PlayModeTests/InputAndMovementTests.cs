@@ -28,5 +28,30 @@ public class InputAndMovement
 
         Assert.IsTrue(spawnXpos < gameObject.transform.position.x);
     }
+
+    [UnityTest]
+    public IEnumerator JumpFromGround()
+    {
+        var gameObject = new GameObject();
+        var characterMovementController = gameObject.AddComponent<CharacterMovementController>();
+
+        float spawnYpos = gameObject.transform.position.y;
+
+        var inputFaker = new InputFaker();
+
+        characterMovementController.AssignInput(inputFaker);
+
+
+
+
+        inputFaker.TestInputJump();
+
+        yield return new WaitForSeconds(.05f);
+
+        Assert.IsTrue(spawnYpos < gameObject.transform.position.y);
+
+    }
+
+
     
 }

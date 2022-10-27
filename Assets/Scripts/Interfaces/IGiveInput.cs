@@ -5,4 +5,6 @@ using UnityEngine;
 public interface IGiveInput 
 {
     public event Action OnRightInput;
+
+    public event Action OnJumpInput;
 }

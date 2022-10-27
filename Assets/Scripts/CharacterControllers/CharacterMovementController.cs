@@ -3,11 +3,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class CharacterMovementController : MonoBehaviour
 {
     Rigidbody2D rb;
 
     IGiveInput inputGiver;
+
+    [SerializeField]
+    float jumpForce = 100;
+
+    [SerializeField]
+    float accelerationSpeed = 100;
+
+    [SerializeField]
+    float maximumSpeed = 1;
+
+    public float MaximumSpeed {get => maximumSpeed;}
+
+    public void SetMaximumSpeed(float speed)
+    {
+        maximumSpeed = speed;
+    }
+
+    [SerializeField]
+    float jumpCoolDownLength = .5f;
+    float jumpCoolDown = 0;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -23,7 +45,17 @@ public class CharacterMovementController : MonoBehaviour
         }
         
     }
+
+    private void Update()
+    {
+        if(jumpCoolDown > 0)
+        {
+            jumpCoolDown -= Time.deltaTime;
+        }
+    }
     
+
+
     public void AssignInput(IGiveInput newinputGiver)
     {
         inputGiver = newinputGiver;
@@ -34,13 +66,22 @@ public class CharacterMovementController : MonoBehaviour
 
     void MoveRight()
     {
-        transform.position += Vector3.right;
+        if(rb.velocity.x < maximumSpeed)
+        {
+            rb.AddForce(Vector2.right * accelerationSpeed);
+        }
+        
     }
 
-    
+
     void Jump()
     {
-        rb.AddForce(Vector2.up * 100);
+        if(jumpCoolDown <= 0)
+        {
+            rb.AddForce(Vector2.up * jumpForce);
+            jumpCoolDown = jumpCoolDownLength;
+        }
+        
     }
 
 }

@@ -5,6 +5,8 @@ public class ContiniousInputFaker : MonoBehaviour, IGiveInput
 {
 
     public event Action OnRightInput;
+
+    public event Action OnLeftInput;
     public event Action OnJumpInput;
 
 
@@ -14,6 +16,11 @@ public class ContiniousInputFaker : MonoBehaviour, IGiveInput
     public void TestInputRight()
     {
         OnRightInput.Invoke();
+    }
+
+    public void TestInputLeft()
+    {
+        OnLeftInput.Invoke();
     }
 
     public void TestInputJump()

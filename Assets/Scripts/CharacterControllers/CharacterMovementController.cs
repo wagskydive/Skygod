@@ -60,6 +60,7 @@ public class CharacterMovementController : MonoBehaviour
     {
         inputGiver = newinputGiver;
         inputGiver.OnRightInput += MoveRight;
+        inputGiver.OnLeftInput += MoveLeft;
         inputGiver.OnJumpInput += Jump;
 
     }
@@ -69,6 +70,15 @@ public class CharacterMovementController : MonoBehaviour
         if(rb.velocity.x < maximumSpeed)
         {
             rb.AddForce(Vector2.right * accelerationSpeed);
+        }
+        
+    }
+
+    void MoveLeft()
+    {
+        if(rb.velocity.x*-1 < maximumSpeed)
+        {
+            rb.AddForce(Vector2.right * -accelerationSpeed);
         }
         
     }

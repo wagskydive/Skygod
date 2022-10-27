@@ -6,9 +6,12 @@ public class CharacterAnimationController : MonoBehaviour
 {
 
     Rigidbody2D rb;
+    CharacterMovementController cm;
     Animator animator;
 
-    public Animator Animat{get=>animator;}
+    SpriteRenderer sr;
+
+    public Animator Animator{get=>animator;}
 
     private void Awake() 
     {
@@ -19,12 +22,36 @@ public class CharacterAnimationController : MonoBehaviour
             animator.runtimeAnimatorController = Resources.Load("Animations/Player") as RuntimeAnimatorController;
         }
         rb = GetComponent<Rigidbody2D>();
+
+
+        cm = GetComponent<CharacterMovementController>();
+        cm.OnMoveLeft += SetFaceLeft;
+        cm.OnMoveRight += SetFaceRight;
+
+        sr = gameObject.GetComponent<SpriteRenderer>();
+        if(sr == null)
+        {
+            sr = gameObject.AddComponent<SpriteRenderer>();
+        }
+
     }
+
+    void SetFaceLeft()
+    {
+        sr.flipX = true;
+    }
+
+    void SetFaceRight()
+    {
+        sr.flipX = false;
+    }
+
 
 
     private void FixedUpdate() 
     {
         animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
+        
     }
 
 }

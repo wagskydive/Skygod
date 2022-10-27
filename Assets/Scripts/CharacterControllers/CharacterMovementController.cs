@@ -6,9 +6,14 @@ using UnityEngine;
 
 public class CharacterMovementController : MonoBehaviour
 {
+    public event Action OnMoveLeft;
+    public event Action OnMoveRight;
+
     Rigidbody2D rb;
 
     IGiveInput inputGiver;
+
+    public IGiveInput InputGiver{get => inputGiver;}
 
     [SerializeField]
     float jumpForce = 100;
@@ -71,7 +76,7 @@ public class CharacterMovementController : MonoBehaviour
         {
             rb.AddForce(Vector2.right * accelerationSpeed);
         }
-        
+        OnMoveRight?.Invoke();
     }
 
     void MoveLeft()
@@ -80,7 +85,7 @@ public class CharacterMovementController : MonoBehaviour
         {
             rb.AddForce(Vector2.right * -accelerationSpeed);
         }
-        
+        OnMoveLeft?.Invoke();
     }
 
 

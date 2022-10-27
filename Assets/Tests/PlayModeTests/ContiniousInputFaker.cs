@@ -11,6 +11,7 @@ public class ContiniousInputFaker : MonoBehaviour, IGiveInput
 
 
     bool rightInputToggle;
+    bool leftInputToggle;
     bool jumpInputToggle;
 
     public void TestInputRight()
@@ -37,6 +38,17 @@ public class ContiniousInputFaker : MonoBehaviour, IGiveInput
         rightInputToggle = false;
     }
 
+    public void StartContiniousLeftInput()
+    {
+        leftInputToggle = true;
+    }
+
+    public void StopContiniousLeftInput()
+    {
+        leftInputToggle = false;
+    }
+
+
     public void StartContiniousJumpInput()
     {
         jumpInputToggle = true;
@@ -54,10 +66,16 @@ public class ContiniousInputFaker : MonoBehaviour, IGiveInput
         {
             TestInputRight();
         }
+        if(leftInputToggle)
+        {
+            TestInputLeft();
+        }
         if(jumpInputToggle)
         {
             TestInputJump();
         }
         
     }
+
+
 }

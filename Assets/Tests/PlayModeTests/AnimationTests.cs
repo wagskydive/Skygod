@@ -14,8 +14,6 @@ public class AnimationTests
         var gameObject = new GameObject();
         var characterMovementController = gameObject.AddComponent<CharacterMovementController>();
         var characterAnimationController = gameObject.AddComponent<CharacterAnimationController>();
-
-
         var inputFaker = gameObject.AddComponent<ContiniousInputFaker>();
 
         characterMovementController.AssignInput(inputFaker);
@@ -35,8 +33,6 @@ public class AnimationTests
         var gameObject = new GameObject();
         var characterMovementController = gameObject.AddComponent<CharacterMovementController>();
         var characterAnimationController = gameObject.AddComponent<CharacterAnimationController>();
-
-
         var inputFaker = gameObject.AddComponent<ContiniousInputFaker>();
 
         characterMovementController.AssignInput(inputFaker);
@@ -52,6 +48,44 @@ public class AnimationTests
         inputFaker.StartContiniousLeftInput();
         yield return new WaitForSeconds(.4f);
         Assert.IsTrue(gameObject.GetComponent<SpriteRenderer>().flipX);
+
+    }
+
+        [UnityTest]
+    public IEnumerator AnimationJumpBoolIsBeingSet()
+    {
+        var gameObject = new GameObject();
+        var characterMovementController = gameObject.AddComponent<CharacterMovementController>();
+        var characterAnimationController = gameObject.AddComponent<CharacterAnimationController>();
+        var inputFaker = gameObject.AddComponent<ContiniousInputFaker>();
+
+        characterMovementController.AssignInput(inputFaker);
+
+
+        inputFaker.TestInputJump();      
+
+        yield return new WaitForSeconds(.05f);
+        Assert.IsTrue(characterAnimationController.Animator.GetBool("Jump"));
+
+    }
+
+    [UnityTest]
+    public IEnumerator AnimationIdleStartsAfterNoMovement()
+    {
+        var gameObject = new GameObject();
+        var characterMovementController = gameObject.AddComponent<CharacterMovementController>();
+        var characterAnimationController = gameObject.AddComponent<CharacterAnimationController>();
+        var inputFaker = gameObject.AddComponent<ContiniousInputFaker>();
+        characterMovementController.AssignInput(inputFaker);
+
+
+        inputFaker.TestInputJump();
+        var rb = gameObject.GetComponent<Rigidbody2D>();
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        
+
+        yield return new WaitForSeconds(2f);
+        Assert.IsFalse(characterAnimationController.Animator.GetBool("Jump"));
 
     }
 

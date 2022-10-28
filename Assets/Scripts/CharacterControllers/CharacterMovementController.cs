@@ -8,6 +8,7 @@ public class CharacterMovementController : MonoBehaviour
 {
     public event Action OnMoveLeft;
     public event Action OnMoveRight;
+    public event Action OnJump;
 
     Rigidbody2D rb;
 
@@ -95,6 +96,7 @@ public class CharacterMovementController : MonoBehaviour
         {
             rb.AddForce(Vector2.up * jumpForce);
             jumpCoolDown = jumpCoolDownLength;
+            OnJump?.Invoke();
         }
         
     }

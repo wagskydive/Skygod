@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,13 @@ public class CharacterAnimationController : MonoBehaviour
 
     public Animator Animator{get=>animator;}
 
+    float idleTimer;
+
+    float idleTimeoutTime = .5f;
+
+    bool idleSensing;
+    
+
     private void Awake() 
     {
         animator = GetComponent<Animator>();
@@ -27,6 +35,8 @@ public class CharacterAnimationController : MonoBehaviour
         cm = GetComponent<CharacterMovementController>();
         cm.OnMoveLeft += SetFaceLeft;
         cm.OnMoveRight += SetFaceRight;
+        cm.OnJump += SetJumpFloat;
+        
 
         sr = gameObject.GetComponent<SpriteRenderer>();
         if(sr == null)
@@ -34,6 +44,17 @@ public class CharacterAnimationController : MonoBehaviour
             sr = gameObject.AddComponent<SpriteRenderer>();
         }
 
+    }
+
+    private void SetJumpFloat()
+    {
+        animator.SetBool("Jump", true);
+        Invoke("UnsetJump", .5f);
+    }
+
+    void UnsetJump()
+    {
+        animator.SetBool("Jump", false);
     }
 
     void SetFaceLeft()
@@ -51,7 +72,9 @@ public class CharacterAnimationController : MonoBehaviour
     private void FixedUpdate() 
     {
         animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
-        
+        animator.SetFloat("FallSpeed", rb.velocity.y);
+
+
     }
 
 }

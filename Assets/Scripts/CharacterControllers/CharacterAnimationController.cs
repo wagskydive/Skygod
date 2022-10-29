@@ -14,12 +14,6 @@ public class CharacterAnimationController : MonoBehaviour
 
     public Animator Animator{get=>animator;}
 
-    float idleTimer;
-
-    float idleTimeoutTime = .5f;
-
-    bool idleSensing;
-    
 
     private void Awake() 
     {

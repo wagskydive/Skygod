@@ -1,5 +1,19 @@
 {
   "dependencies": {
+    "com.coffee.upm-git-extension": {
+      "version": "https://github.com/mob-sakai/UpmGitExtension.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "e949d3e741950d55be7e3d6c6924dcf8935bbec2"
+    },
+    "com.cutawaytv.inventorypackage": {
+      "version": "https://github.com/wagskydive/inventory-package.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "e6b7947e898af3bfb7e6400ce462bbeb3351818d"
+    },
     "com.unity.2d.animation": {
       "version": "7.0.7",
       "depth": 1,
@@ -203,7 +217,7 @@
       }
     },
     "com.unity.test-framework": {
-      "version": "1.1.31",
+      "version": "1.1.33",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -223,7 +237,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.timeline": {
-      "version": "1.6.4",
+      "version": "1.7.1",
       "depth": 0,
       "source": "registry",
       "dependencies": {

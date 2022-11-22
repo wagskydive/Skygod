@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+
 public class CharacterMovementController : MonoBehaviour
 {
     public event Action OnMoveLeft;
@@ -14,7 +15,7 @@ public class CharacterMovementController : MonoBehaviour
 
     IGiveInput inputGiver;
 
-    public IGiveInput InputGiver{get => inputGiver;}
+    public IGiveInput InputGiver { get => inputGiver; }
 
     [SerializeField]
     float jumpForce = 100;
@@ -25,41 +26,52 @@ public class CharacterMovementController : MonoBehaviour
     [SerializeField]
     float maximumSpeed = 1;
 
-    public float MaximumSpeed {get => maximumSpeed;}
+    public float MaximumSpeed { get => maximumSpeed; }
 
-    public void SetMaximumSpeed(float speed)
-    {
-        maximumSpeed = speed;
-    }
+
 
     [SerializeField]
     float jumpCoolDownLength = .5f;
     float jumpCoolDown = 0;
 
+    GroundDetector groundDetector;
+    public void SetMaximumSpeed(float speed)
+    {
+        maximumSpeed = speed;
+    }
+
     private void Awake()
     {
+        groundDetector = GetComponent<GroundDetector>();
+        if (groundDetector ==   null)
+        {
+            groundDetector = gameObject.AddComponent<GroundDetector>();
+        }
+
+
         rb = GetComponent<Rigidbody2D>();
-        if(rb == null) 
+        if (rb == null)
         {
             rb = gameObject.AddComponent<Rigidbody2D>();
 
         }
-        if(inputGiver == null)
+
+        if (inputGiver == null)
         {
             IGiveInput newInputGiver = gameObject.AddComponent<KeyboardInputHandler>();
             AssignInput(newInputGiver);
         }
-        
     }
 
     private void Update()
     {
-        if(jumpCoolDown > 0)
+        if (jumpCoolDown > 0)
         {
             jumpCoolDown -= Time.deltaTime;
         }
+
     }
-    
+
 
 
     public void AssignInput(IGiveInput newinputGiver)
@@ -73,7 +85,7 @@ public class CharacterMovementController : MonoBehaviour
 
     void MoveRight()
     {
-        if(rb.velocity.x < maximumSpeed)
+        if (rb.velocity.x < maximumSpeed)
         {
             rb.AddForce(Vector2.right * accelerationSpeed);
         }
@@ -82,7 +94,7 @@ public class CharacterMovementController : MonoBehaviour
 
     void MoveLeft()
     {
-        if(rb.velocity.x*-1 < maximumSpeed)
+        if (rb.velocity.x * -1 < maximumSpeed)
         {
             rb.AddForce(Vector2.right * -accelerationSpeed);
         }
@@ -92,13 +104,13 @@ public class CharacterMovementController : MonoBehaviour
 
     void Jump()
     {
-        if(jumpCoolDown <= 0)
+        if (groundDetector.IsOnGround && jumpCoolDown <= 0)
         {
             rb.AddForce(Vector2.up * jumpForce);
             jumpCoolDown = jumpCoolDownLength;
             OnJump?.Invoke();
         }
-        
+
     }
 
 }

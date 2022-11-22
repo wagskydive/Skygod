@@ -45,6 +45,10 @@ public class CharacterMovementController : MonoBehaviour
         groundDetector = GetComponent<GroundDetector>();
         if (groundDetector ==   null)
         {
+            if(gameObject.GetComponent<Collider2D>() == null)
+            {
+                gameObject.AddComponent<BoxCollider2D>();
+            }
             groundDetector = gameObject.AddComponent<GroundDetector>();
         }
 

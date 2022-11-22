@@ -23,7 +23,7 @@ public class CharacterAnimationController : MonoBehaviour
         if (animator == null)
         {
             animator = gameObject.AddComponent<Animator>();
-            animator.runtimeAnimatorController = Resources.Load("Animations/Player") as RuntimeAnimatorController;
+            animator.runtimeAnimatorController = Resources.Load("Characters/CrownGuy/PlayerCrowHead") as RuntimeAnimatorController;
         }
 
         gd = GetComponent<GroundDetector>();
